@@ -15,10 +15,7 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/documentation/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/documentation/src/favicon.ico",
-          "apps/documentation/src/assets"
-        ],
+        "assets": ["apps/documentation/src/favicon.ico", "apps/documentation/src/assets"],
         "styles": ["apps/documentation/src/styles.scss"],
         "scripts": []
       },
@@ -70,10 +67,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/documentation/**/*.ts",
-          "apps/documentation/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/documentation/**/*.ts", "apps/documentation/**/*.html"]
       }
     },
     "test": {
