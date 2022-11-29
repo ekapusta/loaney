@@ -1,14 +1,23 @@
 {
   "name": "loaney",
-  "version": "0.0.0",
+  "version": "15.0.0",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Aleksandr Serenko",
+      "email": "fafnur@yandex.ru",
+      "url": "https://fafn.ru"
+    }
+  ],
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "---- Release ----": "",
+    "release": "bash ./scripts/release.sh"
   },
   "private": false,
   "dependencies": {
