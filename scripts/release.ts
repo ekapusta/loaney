@@ -57,7 +57,7 @@ function write(path: string, version: string): void {
  * Update versions
  */
 function updateVersion(version: string, libs: string[]): void {
-  ['package.json', ...libs.map((lib) => join(lib, 'package.json'))].forEach((path) => write(path, version));
+  ['package.json', ...libs.map((lib) => join('libs', lib, 'package.json'))].forEach((path) => write(path, version));
 }
 
 function createGitRelease(version: string): void {
@@ -66,7 +66,7 @@ function createGitRelease(version: string): void {
   execSync('git add .');
   execSync(`git commit -m "version up v${version}"`);
   execSync('git checkout develop');
-  execSync(`git merge ${branch}`);
+  execSync(`git merge ${branch} --no-ff`);
   execSync(`git branch --delete ${branch}`);
   execSync(`git checkout main`);
   execSync(`git rebase develop`);
@@ -81,7 +81,7 @@ function publishNpm(libs: string[]): void {
   for (const lib of libs) {
     execSync(`cd ${__dirname}`);
     execSync(`nx build ${lib.replace(new RegExp('/', 'g'), '-')}`);
-    execSync(`cd ${join(__dirname, '../dist', lib)}`);
+    execSync(`cd ${join(__dirname, '../dist/libs', lib)}`);
     execSync('npm publish --access public');
   }
 }
@@ -102,8 +102,8 @@ function release(libs: string[]): void {
 
     output.log({ title: 'New version creation completed successfully.' });
   } catch (e) {
-    output.error({ title: 'Creation a new release did not complete successfully' });
+    output.error({ title: 'Creation a new release did not complete successfully' + '\n' + e });
   }
 }
 
-release(['libs/core']);
+release(['core']);
