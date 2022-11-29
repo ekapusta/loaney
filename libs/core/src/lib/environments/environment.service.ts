@@ -4,10 +4,12 @@ export const ENVIRONMENTS = new InjectionToken<Record<string, unknown>>('ENVIRON
 
 /**
  * Service for share application environments in Nx libs.
+ * @publicApi
  *
  * @usageNotes
  * ### Example
  * To use, you should provide ENVIRONMENTS in your AppModule.
+ *
  * ```
  * import { NgModule } from '@angular/core';
  * import { ENVIRONMENTS } from '@loaney/core';
