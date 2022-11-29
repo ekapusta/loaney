@@ -31,7 +31,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "---- Release ----": "",
-    "release": "bash ./scripts/release.sh",
+    "release": "ts-node ./scripts/release.ts",
     "---- Hooks ----": "",
     "postinstall": "node ./decorate-angular-cli.js"
   },
