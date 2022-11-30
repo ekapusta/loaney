@@ -1,5 +1,9 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 
+/**
+ * Environment injection token
+ * @publicApi
+ */
 export const ENVIRONMENTS = new InjectionToken<Record<string, unknown>>('ENVIRONMENTS');
 
 /**
@@ -48,6 +52,7 @@ export class EnvironmentService<T extends Record<string, unknown> = Record<strin
 
   /**
    * Return application environments
+   * @publicApi
    */
   get(): T {
     return this.environments;
