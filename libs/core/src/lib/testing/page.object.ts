@@ -5,6 +5,77 @@ import { By } from '@angular/platform-browser';
 /**
  * PageObject for Angular components.
  * @publicApi
+ *
+ * @usageNotes
+ * You can create `PageObject` for simplify tests.
+ *
+ * For example, create `PageObject` for `SimpleComponent`.
+ *
+ * Template for component `simple.component.html`:
+ *
+ * ```
+ * <h1 automation-id="title">Simple title</h1>
+ * ```
+ *
+ * Logic for component `simple.component.ts`:
+ *
+ * ```
+ * @Component({
+ *   selector: 'loaney-simple',
+ *   templateUrl: './simple.component.html',
+ *   styleUrls: ['./simple.component.scss'],
+ *   changeDetection: ChangeDetectionStrategy.OnPush,
+ * })
+ * export class SimpleComponent {}
+ *
+ * ```
+ *
+ * PageObject for SimpleComponent:
+ *
+ * ```
+ * import { PageObject } from '@ekapusta/core/testing';
+ *
+ * export class AadhaarPageComponentPo extends PageObject {
+ *   get title() {
+ *     return this.getByAutomationId('title');
+ *   }
+ * }
+ * ```
+ *
+ * Using on tests:
+ *
+ * ```
+ * import { ComponentFixture, TestBed } from '@angular/core/testing';
+ *
+ * import { SimpleComponent } from './simple.component';
+ * import { AadhaarPageComponentPo } from './simple.component.po';
+ *
+ * describe('SimpleComponent', () => {
+ *   let pageObject: SimpleComponentPo;
+ *   let fixture: ComponentFixture<SimpleComponent>;
+ *
+ *   beforeEach(async () => {
+ *     await TestBed.configureTestingModule({
+ *       declarations: [SimpleComponent],
+ *     }).compileComponents();
+ *
+ *     fixture = TestBed.createComponent(AadhaarPageComponent);
+ *     pageObject = new AadhaarPageComponentPo(fixture);
+ *   });
+ *
+ *   it('should create', () => {
+ *     fixture.detectChanges();
+ *
+ *     expect(fixture.componentInstance).toBeTruthy();
+ *   });
+ *
+ *   it('should show', () => {
+ *     fixture.detectChanges();
+ *
+ *     expect(pageObject.title).toBe('Simple title');
+ *   });
+ * });
+ * ```
  */
 export class PageObject<T = unknown> {
   /**

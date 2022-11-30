@@ -4,6 +4,19 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 /**
  * Service for platform id. Simple facade for isPlatform utils.
  * @publicApi
+ *
+ * @usageNotes
+ * ### Example
+ * You can just use the service:
+ *
+ * ```
+ * @Component({})
+ * class YourComponent {
+ *   constructor(private readonly platformService: PlatformService) {
+ *     const isBrowser = this.platformService.isBrowser;
+ *   }
+ * }
+ * ```
  */
 @Injectable({
   providedIn: 'root',

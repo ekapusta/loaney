@@ -19,6 +19,8 @@ interface EntityAdapter<T> {
 
 /**
  * Util for create configurable ngrx state
+ * @publicApi
+ *
  * @param initialState Initial state ngrx feature
  */
 export function createGetState<T>(initialState: T): (data: Partial<T>) => T {
@@ -27,6 +29,7 @@ export function createGetState<T>(initialState: T): (data: Partial<T>) => T {
 
 /**
  * Util for create configurable ngrx state with ngrx entity
+ * @publicApi
  *
  * @param initialState Initial state ngrx feature
  * @param adapter Ngrx entity adapter
