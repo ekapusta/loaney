@@ -52,7 +52,6 @@ export class EnvironmentService<T extends Record<string, unknown> = Record<strin
 
   /**
    * Return application environments
-   * @publicApi
    */
   get(): T {
     return this.environments;

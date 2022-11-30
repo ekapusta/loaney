@@ -80,7 +80,6 @@ import { By } from '@angular/platform-browser';
 export class PageObject<T = unknown> {
   /**
    * Component fixture or wrapper component fixture.
-   * @publicApi
    *
    * @protected
    */
@@ -92,7 +91,6 @@ export class PageObject<T = unknown> {
 
   /**
    * Method for find debug element by automationId
-   * @publicApi
    *
    * @param automationId Automation id attribute on HTML
    * @protected
@@ -103,7 +101,6 @@ export class PageObject<T = unknown> {
 
   /**
    * Method for find all debug elements by automationId
-   * @publicApi
    *
    * @param automationId Automation id attribute on HTML
    * @protected
@@ -114,7 +111,6 @@ export class PageObject<T = unknown> {
 
   /**
    * Method that finds debug element by automationId and return textContent
-   * @publicApi
    *
    * @param element Debug element or automation id
    * @protected
@@ -131,7 +127,6 @@ export class PageObject<T = unknown> {
 
   /**
    * Method for call js event
-   * @publicApi
    *
    * @param element Debug element or automation id
    * @param eventName Event name (click or custom angular output, like as opened, clicked, viewed)

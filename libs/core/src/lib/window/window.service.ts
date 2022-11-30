@@ -41,7 +41,6 @@ import { Inject, Injectable } from '@angular/core';
 export class WindowService {
   /**
    * Reference to the document contained in the window.
-   * @publicApi
    */
   document: Document;
 
@@ -51,7 +50,6 @@ export class WindowService {
 
   /**
    * The window object
-   * @publicApi
    */
   get window(): Window {
     const window = this.document.defaultView;
