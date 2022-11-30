@@ -9,3 +9,4 @@ export * from './lib/testing/provider-of.util';
 export * from './lib/testing/state.util';
 export * from './lib/types/form.type';
 export * from './lib/types/nullable.type';
+export * from './lib/window/window.service';
