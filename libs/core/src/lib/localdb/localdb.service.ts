@@ -1,5 +1,6 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, InjectionToken, OnDestroy, Optional, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, InjectionToken, OnDestroy, Optional } from '@angular/core';
+import { indexedDB as fakeIndexedDB } from 'fake-indexeddb';
 import { first, Observable, ReplaySubject } from 'rxjs';
 
 /**
@@ -83,8 +84,6 @@ export class LocalDBService implements OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    @Inject(PLATFORM_ID) private readonly platformId: Object,
     @Optional() @Inject(LOCAL_DB_CONFIG) config: Partial<LocalDBConfig> | null
   ) {
     if (config === null) {
@@ -93,40 +92,33 @@ export class LocalDBService implements OnDestroy {
 
     this.config = { ...LOCAL_DB_CONFIG_DEFAULT, ...config };
 
-    if (isPlatformBrowser(this.platformId)) {
-      const onError = (error: unknown): void => {
-        console.error(error);
-        this.database$.complete();
-      };
+    const onError = (error: unknown): void => {
+      console.error(error);
+      this.database$.complete();
+    };
 
-      const indexedDB = this.document.defaultView?.indexedDB;
-      if (!indexedDB) {
-        onError('IndexedDB not available');
-      } else {
-        const openRequest = indexedDB.open(this.config.dbname, this.config.version);
+    // For support Angular Universal using fakeIndexedDB
+    const indexedDB = this.document.defaultView?.indexedDB ?? fakeIndexedDB;
 
-        openRequest.onerror = () => onError(openRequest.error);
-        openRequest.onsuccess = () => this.database$.next(openRequest.result);
+    const openRequest = indexedDB.open(this.config.dbname, this.config.version);
 
-        const onupgradeneeded = () => {
-          try {
-            const database: IDBDatabase = openRequest.result;
-            const allStores = Array.from(database.objectStoreNames);
+    openRequest.onerror = () => onError(openRequest.error);
+    openRequest.onsuccess = () => this.database$.next(openRequest.result);
 
-            const stores = this.config.storeNames.filter((name) => !allStores.includes(name));
+    const onupgradeneeded = () => {
+      try {
+        const database = openRequest.result;
+        const allStores = Array.from(database.objectStoreNames);
+        const stores = this.config.storeNames.filter((name) => !allStores.includes(name));
 
-            for (const store of stores) {
-              database.createObjectStore(store, { keyPath: 'id' });
-            }
-          } catch (error) {
-            onError(error);
-          }
-        };
-        openRequest.onupgradeneeded = this.config.onupgradeneeded ?? onupgradeneeded;
+        for (const store of stores) {
+          database.createObjectStore(store, { keyPath: 'id' });
+        }
+      } catch (error) {
+        onError(error);
       }
-    } else {
-      // TODO: Add SSR mock
-    }
+    };
+    openRequest.onupgradeneeded = this.config.onupgradeneeded ?? onupgradeneeded;
   }
 
   /**

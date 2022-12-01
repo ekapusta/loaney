@@ -10,6 +10,7 @@
     "rxjs": ">= 7.5.0"
   },
   "dependencies": {
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "fake-indexeddb": "^4.0.1"
   }
 }
