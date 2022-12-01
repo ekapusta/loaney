@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MemoryStorage implements Storage {
+  readonly storage: Storage = this;
+
   private data: Record<string, unknown> = {};
 
   get length(): number {
