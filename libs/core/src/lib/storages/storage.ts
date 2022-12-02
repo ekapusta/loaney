@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -35,15 +35,14 @@ export const ASYNC_STORAGE_KEY_DEFAULT = 'loaney';
  * }
  * ```
  */
-@Injectable()
-export class SyncStorage implements Storage {
+export abstract class SyncStorage implements Storage {
   /**
    * Storage for working with data.
    * It's maybe LocalStorage, SessionStorage or MemoryStorage (save data on memory).
    */
   readonly storage: Storage;
 
-  constructor(storage: Storage) {
+  protected constructor(storage: Storage) {
     this.storage = storage;
   }
 
@@ -99,8 +98,7 @@ export class SyncStorage implements Storage {
  * @publicApi
  * ```
  */
-@Injectable()
-export class AsyncStorage<S> {
+export abstract class AsyncStorage<S> {
   /**
    * Current state
    */
@@ -110,9 +108,10 @@ export class AsyncStorage<S> {
    * Storage for working with data
    */
   readonly storage: Storage;
-  readonly key: string;
 
-  constructor(storage: Storage, key: string) {
+  key: string;
+
+  protected constructor(storage: Storage, key: string) {
     this.storage = storage;
     this.key = key;
     this.state$ = new BehaviorSubject<Partial<S>>(this.getLocalState());
