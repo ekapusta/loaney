@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, LOCALE_ID, Optional } from '@angular/core';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { META_CONFIG, META_CONFIG_DEFAULT, META_CONFIG_OG, META_CONFIG_OG_DEFAULT, MetaConfig, MetaConfigOg } from './meta';
@@ -9,6 +9,34 @@ import { META_CONFIG, META_CONFIG_DEFAULT, META_CONFIG_OG, META_CONFIG_OG_DEFAUL
 /**
  * Service for setting meta tags.
  * @publicApi
+ *
+ * @usageNotes
+ * ### Example
+ * Service will be change meta tags after NavigationEnd. You should add information in your route on data:
+ *
+ * ```
+ * import { RouterModule, Routes } from '@angular/router';
+ *
+ * const routes: Routes = [
+ *   {
+ *     path: '',
+ *     component: YourComponent,
+ *     data: {
+ *       meta: {
+ *         title: 'Title for page',
+ *         description: 'Description for page',
+ *         keywords: 'your,keys',
+ *       },
+ *     },
+ *   },
+ * ];
+ *
+ * @NgModule({
+ *   imports: [RouterModule.forChild(routes)],
+ *   exports: [RouterModule],
+ * })
+ * export class YourPageRoutingModule {}
+ * ```
  */
 @Injectable({
   providedIn: 'root',
@@ -20,6 +48,7 @@ export class MetaService {
   constructor(
     private readonly titleService: Title,
     private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
     private readonly meta: Meta,
     @Inject(DOCUMENT) private readonly document: Document,
     @Inject(LOCALE_ID) private readonly localeId: string,
@@ -29,8 +58,17 @@ export class MetaService {
     this.metaConfig = { ...META_CONFIG_DEFAULT, ...metaConfig };
     this.metaConfigOg = { ...META_CONFIG_OG_DEFAULT, ...metaConfigOg };
 
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
-      console.log(event);
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      let route = this.activatedRoute.snapshot;
+
+      while (route.firstChild) {
+        route = route.firstChild;
+      }
+
+      this.update({
+        url: this.router.url,
+        ...route.data['meta'],
+      });
     });
   }
 

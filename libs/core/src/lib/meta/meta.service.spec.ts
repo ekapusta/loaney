@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { mock, when } from 'ts-mockito';
 
@@ -13,18 +13,22 @@ describe('MetaService', () => {
   let getProp: <T = HTMLMetaElement>(prop: string) => T | null;
   let service: MetaService;
   let routerMock: Router;
+  let activatedRouteMock: ActivatedRoute;
   let document: Document;
 
   beforeEach(async () => {
     routerMock = mock(Router);
+    activatedRouteMock = mock(ActivatedRoute);
 
     when(routerMock.url).thenReturn('/');
     when(routerMock.events).thenReturn(EMPTY);
+    when(activatedRouteMock.snapshot).thenReturn({ snapshot: { firstChild: null, data: { meta: META_CONFIG_DEFAULT } } } as any);
 
     await TestBed.configureTestingModule({
       imports: [],
       providers: [
         providerOf(Router, routerMock),
+        providerOf(ActivatedRoute, activatedRouteMock),
         {
           provide: LOCALE_ID,
           useValue: 'ru-RU',
