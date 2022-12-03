@@ -1,3 +1,5 @@
+export * from './lib/api/api.service';
+export * from './lib/api/api.util';
 export * from './lib/environments/environment.service';
 export * from './lib/icons/icon.service';
 export * from './lib/meta/meta';
