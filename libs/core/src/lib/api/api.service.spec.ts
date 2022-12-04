@@ -1,8 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { ERROR_STUB, HTTP_ERROR_STUB } from '../testing/error';
 import { API_CONFIG, ApiConfig, ApiService } from './api.service';
+
+const ERROR_STUB = 'Unknown Error';
+
+const HTTP_ERROR_STUB = new HttpErrorResponse({ status: 400, statusText: 'Bad Request', error: ERROR_STUB });
 
 describe('ApiService', () => {
   let httpTestingController: HttpTestingController;

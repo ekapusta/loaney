@@ -3,9 +3,8 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { mock, when } from 'ts-mockito';
+import { instance, mock, when } from 'ts-mockito';
 
-import { providerOf } from '../testing/provider-of.util';
 import { META_CONFIG, META_CONFIG_DEFAULT, META_CONFIG_OG, META_CONFIG_OG_DEFAULT } from './meta';
 import { MetaService } from './meta.service';
 
@@ -22,13 +21,19 @@ describe('MetaService', () => {
 
     when(routerMock.url).thenReturn('/');
     when(routerMock.events).thenReturn(EMPTY);
-    when(activatedRouteMock.snapshot).thenReturn({ snapshot: { firstChild: null, data: { meta: META_CONFIG_DEFAULT } } } as any);
+    when(activatedRouteMock.snapshot).thenReturn({ snapshot: { firstChild: null, data: { meta: META_CONFIG_DEFAULT } } } as never);
 
     await TestBed.configureTestingModule({
       imports: [],
       providers: [
-        providerOf(Router, routerMock),
-        providerOf(ActivatedRoute, activatedRouteMock),
+        {
+          provide: Router,
+          useFactory: () => instance(routerMock),
+        },
+        {
+          provide: ActivatedRoute,
+          useFactory: () => instance(activatedRouteMock),
+        },
         {
           provide: LOCALE_ID,
           useValue: 'ru-RU',

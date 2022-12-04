@@ -1,15 +1,11 @@
 {
-  "name": "@loaney/core",
+  "name": "@loaney/testing",
   "version": "15.0.0",
   "peerDependencies": {
     "@angular/common": ">= 14.0.0",
     "@angular/core": ">= 14.0.0",
-    "@angular/forms": ">= 14.0.0",
-    "@angular/material": ">= 14.0.0",
-    "@angular/router": ">= 14.0.0",
     "@angular/platform-browser": ">= 14.0.0",
-    "fake-indexeddb": ">= 4.0.0",
-    "rxjs": ">= 7.5.0"
+    "ts-mockito": ">= 2.0.0"
   },
   "dependencies": {
     "tslib": "^2.4.1"
