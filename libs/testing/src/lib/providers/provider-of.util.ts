@@ -9,11 +9,11 @@ import { instance } from 'ts-mockito';
  * @param mockClass Mock class
  *
  * @usageNotes
- * Using `providerOf` for testing simple component.
+ * Using `providerOf` for providers simple component.
  *
  * ```
  * import { CommonModule } from '@angular/common';
- * import { ComponentFixture, TestBed } from '@angular/core/testing';
+ * import { ComponentFixture, TestBed } from '@angular/core/providers';
  * import { mock } from 'ts-mockito';
  *
  * import { providerOf } from './provider-of.util';

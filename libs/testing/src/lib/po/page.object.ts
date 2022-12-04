@@ -33,7 +33,7 @@ import { By } from '@angular/platform-browser';
  * PageObject for SimpleComponent:
  *
  * ```
- * import { PageObject } from '@ekapusta/core/testing';
+ * import { PageObject } from '@ekapusta/core/providers';
  *
  * export class AadhaarPageComponentPo extends PageObject {
  *   get title() {
@@ -45,7 +45,7 @@ import { By } from '@angular/platform-browser';
  * Using on tests:
  *
  * ```
- * import { ComponentFixture, TestBed } from '@angular/core/testing';
+ * import { ComponentFixture, TestBed } from '@angular/core/providers';
  *
  * import { SimpleComponent } from './simple.component';
  * import { AadhaarPageComponentPo } from './simple.component.po';
