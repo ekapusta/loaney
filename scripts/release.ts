@@ -70,7 +70,9 @@ function createGitRelease(version: string): void {
   execSync(`git branch --delete ${branch}`);
   execSync(`git checkout main`);
   execSync(`git rebase develop`);
+  execSync(`git tag ${version}`);
   execSync(`git push -u origin main develop`);
+  execSync(`git push --tags`);
 }
 
 /**
