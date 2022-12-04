@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 
-// import { NavigationExternalPathPipe } from './pipes/navigation-external-path.pipe';
-import { NavigationPathPipe } from './pipes/navigation-path.pipe';
+import { ExternalPathPipe } from './pipes/external-path.pipe';
+import { PathPipe } from './pipes/path.pipe';
 
-const pipes = [NavigationPathPipe];
+const pipes = [PathPipe, ExternalPathPipe];
 
+/**
+ * Service for navigation pipes
+ * @publicApi
+ */
 @NgModule({
   declarations: pipes,
   exports: pipes,

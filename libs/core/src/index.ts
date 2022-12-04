@@ -7,7 +7,7 @@ export * from './lib/meta/meta.module';
 export * from './lib/meta/meta.service';
 export * from './lib/navigation/navigation.module';
 export * from './lib/navigation/navigation.service';
-export * from './lib/navigation/pipes/navigation-path.pipe';
+export * from './lib/navigation/pipes/path.pipe';
 export * from './lib/operators/extract.operator';
 export * from './lib/operators/not-null-or-undefined.operator';
 export * from './lib/platform/platform.service';

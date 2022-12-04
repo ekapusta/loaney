@@ -5,7 +5,7 @@ import { NavigationService } from '../navigation.service';
 @Pipe({
   name: 'path',
 })
-export class NavigationPathPipe implements PipeTransform {
+export class PathPipe implements PipeTransform {
   constructor(private readonly navigationService: NavigationService) {}
 
   transform(path: string, params?: Record<string, string | number>): string {
