@@ -1,0 +1,17 @@
+<div *ngIf="slides?.length" (swipeleft)="onNext()" (swiperight)="onPrev()">
+  <loaney-carousel-slide
+    automation-id="carousel-slide"
+    [slide]="image"
+    [active]="active === index"
+    *ngFor="let image of slides; let index = index; trackBy: trackByFn"
+    (clicked)="onClicked($event)"
+  ></loaney-carousel-slide>
+
+  <loaney-carousel-dots
+    automation-id="carousel-dots"
+    [counts]="slides.length"
+    [active]="active"
+    (selected)="onSelected($event)"
+  ></loaney-carousel-dots>
+  <loaney-carousel-navs automation-id="carousel-navs" (prev)="onPrev()" (next)="onNext()"></loaney-carousel-navs>
+</div>
