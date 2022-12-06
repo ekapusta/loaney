@@ -108,4 +108,4 @@ function release(libs: string[]): void {
   }
 }
 
-release(['core', 'testing']);
+release(['core', 'components', 'testing']);
