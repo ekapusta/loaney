@@ -1,4 +1,4 @@
-@use '../../../../../mixins' as mixins;
+@use '../../../../styles/mixins' as mixins;
 @use 'sass:math';
 
 @mixin make-columns($mode) {
