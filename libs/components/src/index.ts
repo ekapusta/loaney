@@ -1,3 +1,5 @@
+export * from './lib/container/container.component';
+export * from './lib/container/container.module';
 export * from './lib/grid/components/column/column.component';
 export * from './lib/grid/components/column/column.module';
 export * from './lib/grid/components/row/row.component';
