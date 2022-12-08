@@ -80,10 +80,11 @@ function createGitRelease(version: string): void {
  * @param libs
  */
 function publishNpm(libs: string[]): void {
+  const workspace = process.cwd();
   for (const lib of libs) {
-    execSync(`cd ${__dirname}`);
+    execSync(`cd ${workspace}`);
     execSync(`nx build ${lib.replace(new RegExp('/', 'g'), '-')}`);
-    execSync(`cd ${join(__dirname, '../dist/libs', lib)}`);
+    execSync(`cd ${join(workspace, 'dist/libs', lib)}`);
     execSync('npm publish --access public');
   }
 }
