@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@loaney/components": ["libs/components/src/index.ts"],
       "@loaney/core": ["libs/core/src/index.ts"],
       "@loaney/testing": ["libs/testing/src/index.ts"]
     }

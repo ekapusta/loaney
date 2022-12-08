@@ -10,7 +10,7 @@ import { first, Observable, ReplaySubject } from 'rxjs';
 export interface LocalDBRecord {
   [key: string]: unknown;
 
-  id: string;
+  id: string | number;
 }
 
 /**
@@ -163,7 +163,7 @@ export class LocalDBService implements OnDestroy {
    * @param storeName Store name
    * @param key Record id
    */
-  get<T = LocalDBRecord>(storeName: string, key: string): Observable<T | null> {
+  get<T = LocalDBRecord>(storeName: string, key: string | number): Observable<T | null> {
     return new Observable((observer) => {
       const onError = (error: unknown) => {
         console.error(error, { storeName, operation: 'get' });
@@ -254,7 +254,7 @@ export class LocalDBService implements OnDestroy {
    * @param storeName Store name
    * @param key Record id
    */
-  remove(storeName: string, key: string): Observable<void> {
+  remove(storeName: string, key: string | number): Observable<void> {
     return new Observable((observer) => {
       const onError = (error: unknown) => {
         console.error(error, { storeName, operation: 'remove' });
