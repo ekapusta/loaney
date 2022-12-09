@@ -7,6 +7,7 @@ export * from './lib/icons/icon.service';
 export * from './lib/meta/meta';
 export * from './lib/meta/meta.module';
 export * from './lib/meta/meta.service';
+export * from './lib/metrics/yandex-metrika.service';
 export * from './lib/navigation/navigation.module';
 export * from './lib/navigation/navigation.service';
 export * from './lib/navigation/pipes/external-path.pipe';
