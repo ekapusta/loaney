@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$loaney-primary: mat.define-palette(mat.$green-palette, A700);
+$loaney-accent: mat.define-palette(mat.$amber-palette);
+$loaney-warn: mat.define-palette(mat.$red-palette);
+
+$loaney-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $loaney-primary,
+      accent: $loaney-accent,
+      warn: $loaney-warn,
+    ),
+    typography: mat.define-typography-config(),
+  )
+);
+
+@include mat.all-component-themes($loaney-theme);
+
+// Fix material ui input
+html {
+  --mdc-typography-button-letter-spacing: normal;
+  --mdc-typography-body1-font-size: 16px;
+  --mdc-typography-body2-font-size: 16px;
+}

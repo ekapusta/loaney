@@ -24,3 +24,5 @@ export * from './lib/grid/grid.service';
 export * from './lib/grid/grid.util';
 export * from './lib/layout/layout.component';
 export * from './lib/layout/layout.module';
+export * from './lib/navbar/navbar.component';
+export * from './lib/navbar/navbar.module';
