@@ -1,0 +1,46 @@
+@use '@angular/material' as mat;
+@use '../../styles/variables' as variables;
+
+:host {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+mat-sidenav {
+  width: 100%;
+  background-color: white;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+
+  a {
+    padding: 0.75rem 1rem;
+    font-size: 1.15rem;
+    text-decoration: underline;
+    color: variables.$color-default;
+    transition: color ease 0.3s;
+
+    &:hover {
+      color: variables.$color-medium;
+    }
+
+    &:visited {
+      color: variables.$color-default;
+    }
+
+    &.is-active {
+      color: variables.$color-primary;
+    }
+  }
+}

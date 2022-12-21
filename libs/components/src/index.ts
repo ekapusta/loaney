@@ -26,3 +26,5 @@ export * from './lib/layout/layout.component';
 export * from './lib/layout/layout.module';
 export * from './lib/navbar/navbar.component';
 export * from './lib/navbar/navbar.module';
+export * from './lib/sidebar/sidebar.component';
+export * from './lib/sidebar/sidebar.module';

@@ -2,16 +2,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { NavigationLink } from '@loaney/core';
 
-/**
- * Navbar component
- * @publicApi
- */
 @Component({
-  selector: 'loaney-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: 'loaney-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent {
+export class SidebarComponent {
   @Input() links!: NavigationLink[];
 }
