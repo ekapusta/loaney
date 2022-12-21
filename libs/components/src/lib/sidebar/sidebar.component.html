@@ -1,8 +1,8 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" fixedInViewport="true" [autoFocus]="false">
     <header>
       <div><ng-content></ng-content></div>
-      <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>close</mat-icon></button>
+      <button aria-label="close" mat-icon-button (click)="sidenav.toggle()"><mat-icon>close</mat-icon></button>
     </header>
     <nav>
       <a
@@ -17,6 +17,6 @@
   </mat-sidenav>
 </mat-sidenav-container>
 
-<button mat-icon-button aria-label="Open menu" [autofocus]="false" (click)="sidenav.toggle()">
+<button aria-label="open" mat-icon-button [autofocus]="false" (click)="sidenav.toggle()">
   <mat-icon>menu</mat-icon>
 </button>
