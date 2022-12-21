@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="start" [tabPanel]="navPanel">
+  <a mat-tab-link routerLinkActive="is-active" [routerLink]="link.route | path" *ngFor="let link of links">
+    {{ link.label }}
+  </a>
+</nav>
+<mat-tab-nav-panel #navPanel></mat-tab-nav-panel>

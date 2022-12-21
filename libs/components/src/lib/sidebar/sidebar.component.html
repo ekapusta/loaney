@@ -1,0 +1,22 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" fixedInViewport="true" [autoFocus]="false">
+    <header>
+      <div><ng-content></ng-content></div>
+      <button aria-label="close" mat-icon-button (click)="sidenav.toggle()"><mat-icon>close</mat-icon></button>
+    </header>
+    <nav>
+      <a
+        *ngFor="let link of links"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLink]="link.route | path"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<button aria-label="open" mat-icon-button [autofocus]="false" (click)="sidenav.toggle()">
+  <mat-icon>menu</mat-icon>
+</button>

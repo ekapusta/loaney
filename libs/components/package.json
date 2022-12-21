@@ -8,6 +8,7 @@
     "@angular/material": ">= 14.0.0",
     "@angular/platform-browser": ">= 14.0.0",
     "@angular/router": ">= 14.0.0",
+    "@loaney/core": ">= 15.0.0",
     "rxjs": ">= 7.5.0"
   },
   "dependencies": {

@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+$color-light: mat.get-color-from-palette(mat.$grey-palette, 300);
+$color-medium: mat.get-color-from-palette(mat.$grey-palette, 600);
+$color-default: mat.get-color-from-palette(mat.$grey-palette, 900);
+
+$color-primary: mat.get-color-from-palette(mat.$green-palette, A700);
+$color-accent: mat.get-color-from-palette(mat.$amber-palette, 500);
+$color-danger: mat.get-color-from-palette(mat.$red-palette, 500);
