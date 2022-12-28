@@ -81,7 +81,7 @@ export class MetaService {
     this.setCanonicalUrl(config.url);
     this.titleService.setTitle(config.title);
     this.setMetaProperty('description', config.description);
-    this.setMetaProperty('keywords', config.keywords);
+    this.setMetaProperty('keywords', config.keywords ?? '');
     this.setMetaProperty('og:title', configOg.title ?? config.title);
     this.setMetaProperty('og:description', configOg.description ?? config.description);
     this.setMetaProperty('og:type', configOg.type);

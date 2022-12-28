@@ -18,7 +18,7 @@ export interface MetaConfig {
   /**
    * Page keywords
    */
-  readonly keywords: string;
+  readonly keywords?: string;
 
   /**
    * Page canonical url
@@ -39,12 +39,12 @@ export interface MetaConfigOg {
   /**
    * OG Title
    */
-  readonly title: string;
+  readonly title?: string;
 
   /**
    * OG Description
    */
-  readonly description: string;
+  readonly description?: string;
 
   /**
    * OG type
@@ -101,7 +101,7 @@ export const META_CONFIG_OG = new InjectionToken<Partial<MetaConfigOg>>('MetaCon
 export const META_CONFIG_DEFAULT: MetaConfig = {
   title: 'Loaney',
   description: 'Loaney site',
-  keywords: 'loaney',
+  keywords: '',
 };
 
 /**
@@ -109,8 +109,6 @@ export const META_CONFIG_DEFAULT: MetaConfig = {
  * @publicApi
  */
 export const META_CONFIG_OG_DEFAULT: MetaConfigOg = {
-  title: META_CONFIG_DEFAULT.title,
-  description: META_CONFIG_DEFAULT.description,
   siteName: 'loaney',
   type: 'website',
   image: '/assets/images/site.jpg',
