@@ -38,21 +38,18 @@ export interface GoogleAnalyticsConfig {
 export const GA_CONFIG = new InjectionToken<Partial<GoogleAnalyticsConfig>>('GoogleAnalyticsConfig');
 
 export interface GoogleAnalyticsEvent<T = unknown> {
-  eventAction: string;
-  eventCategory?: string;
-  eventLabel?: string;
-  eventValue?: T;
+  eventCategory: string;
+  eventLabel: string;
+  eventValue: T;
 }
 
 export interface GoogleAnalyticsNavigation {
-  url: string;
-  queryParams?: Record<string, unknown>;
-  title: string;
-  location?: string;
+  [key: string]: unknown;
 
-  platform?: string;
-  appstore?: string;
-  customerId?: string;
+  title: string;
+  platform: string;
+  appstore: string;
+  customerId: string;
 }
 
 @Injectable()
@@ -85,15 +82,15 @@ export class GoogleAnalyticsService {
     this.gtag('set', payload);
   }
 
-  sendEvent(payload: GoogleAnalyticsEvent, values?: Record<string, unknown>, data?: unknown): void {
+  sendEvent(action: string, payload?: Partial<GoogleAnalyticsEvent>, values?: Record<string, unknown>, data?: unknown): void {
     /* eslint-disable @typescript-eslint/naming-convention */
     this.gtag(
       'event',
-      payload.eventAction,
+      action,
       {
-        event_category: payload.eventCategory,
-        event_label: payload.eventLabel,
-        value: payload.eventValue,
+        event_category: payload?.eventCategory,
+        event_label: payload?.eventLabel,
+        value: payload?.eventValue,
         ...values,
       },
       data
@@ -101,7 +98,7 @@ export class GoogleAnalyticsService {
     /* eslint-enable @typescript-eslint/naming-convention */
   }
 
-  sendNavigation(payload: GoogleAnalyticsNavigation): void {
+  sendNavigation(url: string, options?: Partial<GoogleAnalyticsNavigation>): void {
     if (
       !this.config.domains.every((domain) => this.document.referrer.indexOf(domain) < 0) ||
       !this.config.paths.every((path) => this.document.location.pathname.indexOf(path) < 0)
@@ -109,16 +106,18 @@ export class GoogleAnalyticsService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       this.set({ page_referrer: this.document.defaultView?.location.origin ?? '' });
     }
-    this.set({ dimension3: payload.platform, dimension4: payload.appstore });
+    if (options?.platform && options?.appstore) {
+      this.set({ dimension3: options.platform, dimension4: options.appstore });
+    }
 
     const ids = this.webviewService.isWebview() ? this.config.idsWebview : this.config.ids;
 
     for (const key of ids) {
       /* eslint-disable @typescript-eslint/naming-convention */
       this.gtag('config', key, {
-        page_title: payload.title,
-        page_path: payload.url,
-        user_id: payload.customerId ?? null,
+        page_title: options?.title,
+        page_path: url,
+        user_id: options?.customerId ?? null,
       });
       /* eslint-enable @typescript-eslint/naming-convention */
     }

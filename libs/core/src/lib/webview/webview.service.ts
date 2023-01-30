@@ -1,27 +1,78 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, InjectionToken, Optional, PLATFORM_ID } from '@angular/core';
 
+/**
+ * Webview key in localstorage
+ * @publicApi
+ */
 export const WEBVIEW_KEY = 'WEBVIEW_KEY';
 
+/**
+ * Webview config interface
+ * @publicApi
+ */
 export interface WebviewConfig {
-  android: string;
-  ios: string;
+  /**
+   * Android user-agent custom string
+   */
+  readonly android: string;
+
+  /**
+   * Ios user-agent custom string
+   */
+  readonly ios: string;
+
+  /**
+   * Default value for detect
+   */
+  readonly defaultValue: boolean;
 }
 
+/**
+ * InjectionToken for webview config
+ * @publicApi
+ */
 export const WEBVIEW_CONFIG = new InjectionToken<Partial<WebviewConfig>>('WEBVIEW_CONFIG');
 
+/**
+ * Find custom string in user-agent
+ * @publicApi
+ *
+ * @param window Window
+ * @param value Custom string
+ */
 export function findCustomUserAgent(window: Window | null, value: string): boolean {
   const navigator = window?.navigator ?? null;
 
   return !!navigator && navigator.userAgent.indexOf(value) >= 0;
 }
 
+/**
+ * Service for detect webview platform
+ * @publicApi
+ *
+ * @usageNotes
+ * ### Example
+ *
+ * For using service, you should save custom token in localstorage or customization Webview.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class WebviewService {
+  /**
+   * Is IOS webview
+   */
   readonly isIos: boolean;
+
+  /**
+   * Is Android webview
+   */
   readonly isAndroid: boolean;
+
+  /**
+   * Webview config
+   */
   readonly config: WebviewConfig;
 
   constructor(
@@ -33,6 +84,7 @@ export class WebviewService {
     this.config = {
       android: config?.android ?? 'WebViewAndroid',
       ios: config?.ios ?? 'WebViewIOS',
+      defaultValue: config?.defaultValue ?? false,
     };
 
     this.isAndroid = findCustomUserAgent(this.document.defaultView, this.config.android);
@@ -40,13 +92,16 @@ export class WebviewService {
   }
 
   /**
-   * Webview is hide a part functionality web application, so default value is true
+   * Return current platform is webview
    */
   isWebview(): boolean {
     if (this.isIos || this.isAndroid) {
       return true;
     }
 
+    /**
+     * TODO: This is legacy way.
+     */
     if (isPlatformBrowser(this.platformId) && this.document?.defaultView?.localStorage) {
       try {
         return this.document.defaultView.localStorage.getItem(WEBVIEW_KEY) !== null;
@@ -55,6 +110,6 @@ export class WebviewService {
       }
     }
 
-    return true;
+    return this.config.defaultValue;
   }
 }
