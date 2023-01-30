@@ -12,12 +12,19 @@ declare global {
   }
 }
 
+/**
+ * GA config
+ * @publicApi
+ */
 export interface GoogleAnalyticsConfig {
   /**
-   * Counter
+   * Google Analytics uid collection
    */
   ids: string[];
 
+  /**
+   * Google Analytics uid for webview
+   */
   idsWebview: string[];
 
   /**
@@ -37,25 +44,124 @@ export interface GoogleAnalyticsConfig {
  */
 export const GA_CONFIG = new InjectionToken<Partial<GoogleAnalyticsConfig>>('GoogleAnalyticsConfig');
 
+/**
+ * Google Analytics event interface
+ * @publicApi
+ */
 export interface GoogleAnalyticsEvent<T = unknown> {
+  /**
+   * Event category
+   */
   eventCategory: string;
+
+  /**
+   * Event value
+   */
   eventLabel: string;
+
+  /**
+   * Event value
+   */
   eventValue: T;
 }
 
+/**
+ * Google Analytics navigation interface
+ * @publicApi
+ */
 export interface GoogleAnalyticsNavigation {
   [key: string]: unknown;
 
+  /**
+   * Page title
+   */
   title: string;
+
+  /**
+   * Current platform (web or app)
+   */
   platform: string;
+
+  /**
+   * Current application store (google play, app store, xiaomi, ...)
+   */
   appstore: string;
+
+  /**
+   * Customer ID
+   */
   customerId: string;
 }
 
+/**
+ * Service for send all metrics.
+ * @publicApi
+ *
+ * @usageNotes
+ * ### Example
+ *
+ * First, add script in index.html for Google Analytics.
+ *
+ * ```
+ * <!DOCTYPE html>
+ * <html lang="en">
+ *   <head>
+ *     <meta charset="utf-8" />
+ *     <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TAG"></script>
+ *     <script>
+ *       window.dataLayer = window.dataLayer || [];
+ *       function gtag() {
+ *         dataLayer.push(arguments);
+ *       }
+ *       gtag('js', new Date());
+ *     </script>
+ *   </head>
+ *   <body>
+ *     <app-root></app-root>
+ *   </body>
+ * </html>
+ * ```
+ *
+ * Second, set config on AppModule:
+ *
+ * ```
+ * @NgModule({
+ *   providers: [
+ *     {
+ *       provide: GA_CONFIG,
+ *       useValue: {
+ *         ids: ['MY-ID-1', 'MY-ID-2'],
+ *         idsWebview: ['MY-ID-1'],
+ *       } as Partial<GoogleAnalyticsConfig>,
+ *     },
+ *   ],
+ * })
+ * export class AppCoreModule {}
+ * ```
+ *
+ * Third, add service on component and send event.
+ *
+ * ```
+ * @Component({})
+ * export class SimpleComponent {
+ *   constructor(private readonly googleAnalyticsService: GoogleAnalyticsService) {}
+ *
+ *   onSubmit(): void {
+ *     this.googleAnalyticsService.sendEvent('submit', { eventLabel: 'Registration' });
+ *   }
+ * }
+ * ```
+ */
 @Injectable()
 export class GoogleAnalyticsService {
+  /**
+   * GA config
+   */
   readonly config: GoogleAnalyticsConfig;
 
+  /**
+   * Gtag function
+   */
   readonly gtag: (...params: unknown[]) => void;
 
   constructor(
@@ -78,10 +184,23 @@ export class GoogleAnalyticsService {
     }
   }
 
+  /**
+   * Set config for GA
+   *
+   * @param payload Payload with data
+   */
   set(payload: Record<string, unknown>): void {
     this.gtag('set', payload);
   }
 
+  /**
+   * Send Google Analytic event
+   *
+   * @param action Event name
+   * @param payload Payload
+   * @param values Custom values for GA
+   * @param data Custom data on GA
+   */
   sendEvent(action: string, payload?: Partial<GoogleAnalyticsEvent>, values?: Record<string, unknown>, data?: unknown): void {
     /* eslint-disable @typescript-eslint/naming-convention */
     this.gtag(
@@ -98,6 +217,12 @@ export class GoogleAnalyticsService {
     /* eslint-enable @typescript-eslint/naming-convention */
   }
 
+  /**
+   * Change SPA page
+   *
+   * @param url A new URL
+   * @param options GA options
+   */
   sendNavigation(url: string, options?: Partial<GoogleAnalyticsNavigation>): void {
     if (
       !this.config.domains.every((domain) => this.document.referrer.indexOf(domain) < 0) ||
@@ -117,7 +242,7 @@ export class GoogleAnalyticsService {
       this.gtag('config', key, {
         page_title: options?.title,
         page_path: url,
-        user_id: options?.customerId ?? null,
+        user_id: options?.customerId,
       });
       /* eslint-enable @typescript-eslint/naming-convention */
     }

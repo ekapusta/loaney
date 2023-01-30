@@ -76,13 +76,8 @@ export const YANDEX_METRIKA_CONFIG = new InjectionToken<Partial<YandexMetrikaCon
  * Then, you can send hit and reachGoal
  *
  * ```
- * @Component({
- *   selector: 'ek-recovery-form',
- *   templateUrl: './recovery-form.component.html',
- *   styleUrls: ['./recovery-form.component.scss'],
- *   changeDetection: ChangeDetectionStrategy.OnPush,
- * })
- * export class RecoveryFormComponent {
+ * @Component({})
+ * export class SimpleComponent {
  *   constructor(private readonly yandexMetrikaService: YandexMetrikaService) {}
  *
  *   onSubmit(): void {
