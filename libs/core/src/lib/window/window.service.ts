@@ -42,7 +42,7 @@ export class WindowService {
   /**
    * Reference to the document contained in the window.
    */
-  document: Document;
+  readonly document: Document;
 
   constructor(@Inject(DOCUMENT) document: Document) {
     this.document = document;

@@ -5,7 +5,6 @@
     "@angular/common": ">= 14.0.0",
     "@angular/core": ">= 14.0.0",
     "@angular/forms": ">= 14.0.0",
-    "@angular/material": ">= 14.0.0",
     "@angular/router": ">= 14.0.0",
     "@angular/platform-browser": ">= 14.0.0",
     "fake-indexeddb": ">= 4.0.0",

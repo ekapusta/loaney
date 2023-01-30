@@ -11,12 +11,6 @@ declare global {
 }
 
 /**
- * InjectionToken for yandex metrika config
- * @publicApi
- */
-export const YANDEX_METRIKA_CONFIG = new InjectionToken<YandexMetrikaConfig>('YANDEX_METRIKA_CONFIG');
-
-/**
  * Yandex metrika config
  * @publicApi
  */
@@ -36,6 +30,12 @@ export interface YandexMetrikaConfig {
    */
   paths: string[];
 }
+
+/**
+ * InjectionToken for yandex metrika config
+ * @publicApi
+ */
+export const YANDEX_METRIKA_CONFIG = new InjectionToken<Partial<YandexMetrikaConfig>>('YANDEX_METRIKA_CONFIG');
 
 /**
  * Service for Yandex Metrika
@@ -76,13 +76,8 @@ export interface YandexMetrikaConfig {
  * Then, you can send hit and reachGoal
  *
  * ```
- * @Component({
- *   selector: 'ek-recovery-form',
- *   templateUrl: './recovery-form.component.html',
- *   styleUrls: ['./recovery-form.component.scss'],
- *   changeDetection: ChangeDetectionStrategy.OnPush,
- * })
- * export class RecoveryFormComponent {
+ * @Component({})
+ * export class SimpleComponent {
  *   constructor(private readonly yandexMetrikaService: YandexMetrikaService) {}
  *
  *   onSubmit(): void {
@@ -111,7 +106,7 @@ export class YandexMetrikaService {
     // eslint-disable-next-line @typescript-eslint/ban-types
     @Inject(PLATFORM_ID) private readonly platformId: Object,
     @Inject(DOCUMENT) private readonly document: Document,
-    @Optional() @Inject(YANDEX_METRIKA_CONFIG) config: YandexMetrikaConfig | null
+    @Optional() @Inject(YANDEX_METRIKA_CONFIG) config: Partial<YandexMetrikaConfig> | null
   ) {
     this.config = {
       ...config,
