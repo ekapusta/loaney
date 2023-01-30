@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 
+import { WebviewService } from '../webview/webview.service';
+
 declare global {
   interface Window {
     /**
@@ -15,6 +17,8 @@ export interface GoogleAnalyticsConfig {
    * Counter
    */
   ids: string[];
+
+  idsWebview: string[];
 
   /**
    * Domains for reset referer
@@ -45,6 +49,10 @@ export interface GoogleAnalyticsNavigation {
   queryParams?: Record<string, unknown>;
   title: string;
   location?: string;
+
+  platform?: string;
+  appstore?: string;
+  customerId?: string;
 }
 
 @Injectable()
@@ -54,11 +62,13 @@ export class GoogleAnalyticsService {
   readonly gtag: (...params: unknown[]) => void;
 
   constructor(
+    private readonly webviewService: WebviewService,
     @Inject(DOCUMENT) private readonly document: Document,
     @Optional() @Inject(GA_CONFIG) config: Partial<GoogleAnalyticsConfig> | null
   ) {
     this.config = {
       ids: config?.ids ?? [],
+      idsWebview: config?.idsWebview ?? [],
       paths: config?.paths ?? [],
       domains: config?.domains ?? [],
     };
@@ -75,13 +85,10 @@ export class GoogleAnalyticsService {
     this.gtag('set', payload);
   }
 
-  send(action: string, options: Record<string, unknown> | string, data?: unknown): void {
-    this.gtag('event', action, options, data);
-  }
-
-  event(payload: GoogleAnalyticsEvent, values?: Record<string, unknown>, data?: unknown): void {
+  sendEvent(payload: GoogleAnalyticsEvent, values?: Record<string, unknown>, data?: unknown): void {
     /* eslint-disable @typescript-eslint/naming-convention */
-    this.send(
+    this.gtag(
+      'event',
       payload.eventAction,
       {
         event_category: payload.eventCategory,
@@ -95,27 +102,25 @@ export class GoogleAnalyticsService {
   }
 
   sendNavigation(payload: GoogleAnalyticsNavigation): void {
-    // if (
-    //   !this.config.domains.every((domain) => this.document.referrer.indexOf(domain) < 0) ||
-    //   !this.config.paths.every((path) => this.document.location.pathname.indexOf(path) < 0)
-    // ) {
-    //   // eslint-disable-next-line @typescript-eslint/naming-convention
-    //   this.set({ page_referrer: this.document.defaultView?.location.origin ?? '' });
-    // }
-    // this.set({ dimension3: this.platform, dimension4: this.appstore });
-    //
-    // const ids = this.isWebView ? this.gaIds.webView : this.gaIds.all;
-    //
-    // for (const key of ids) {
-    //   /* eslint-disable @typescript-eslint/naming-convention */
-    //   const googlePayload: Record<string, any> = {
-    //     page_title: payload.title,
-    //     page_path: payload.url,
-    //     user_id: this.localSyncStorage.getItem(CurrentCustomerKeys.CustomerId) ?? null,
-    //   };
-    //
-    //   gtag('config', key, googlePayload);
-    //   /* eslint-enable @typescript-eslint/naming-convention */
-    // }
+    if (
+      !this.config.domains.every((domain) => this.document.referrer.indexOf(domain) < 0) ||
+      !this.config.paths.every((path) => this.document.location.pathname.indexOf(path) < 0)
+    ) {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      this.set({ page_referrer: this.document.defaultView?.location.origin ?? '' });
+    }
+    this.set({ dimension3: payload.platform, dimension4: payload.appstore });
+
+    const ids = this.webviewService.isWebview() ? this.config.idsWebview : this.config.ids;
+
+    for (const key of ids) {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      this.gtag('config', key, {
+        page_title: payload.title,
+        page_path: payload.url,
+        user_id: payload.customerId ?? null,
+      });
+      /* eslint-enable @typescript-eslint/naming-convention */
+    }
   }
 }
