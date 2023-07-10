@@ -1,6 +1,6 @@
 import { writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { output } from '@nrwl/workspace';
+import { output } from '@nx/workspace';
 import { execSync } from 'child_process';
 
 /**
