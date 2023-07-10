@@ -1,12 +1,27 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@typescript-eslint", "prettier", "simple-import-sort", "import", "jsdoc", "ngrx", "@nrwl/nx"],
+  "ignorePatterns": [
+    "**/*"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "simple-import-sort",
+    "import",
+    "jsdoc",
+    "ngrx",
+    "@nx"
+  ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -14,7 +29,9 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               }
             ]
           }
@@ -22,14 +39,24 @@
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript", "plugin:@nrwl/nx/angular", "plugin:import/recommended", "plugin:ngrx/recommended"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "plugin:@nx/typescript",
+        "plugin:@nx/angular",
+        "plugin:import/recommended",
+        "plugin:ngrx/recommended"
+      ],
       "rules": {
         "@typescript-eslint/naming-convention": [
           "error",
           {
             "selector": "default",
-            "format": ["camelCase"],
+            "format": [
+              "camelCase"
+            ],
             "leadingUnderscore": "allow",
             "trailingUnderscore": "allow",
             "filter": {
@@ -39,17 +66,24 @@
           },
           {
             "selector": "variable",
-            "format": ["camelCase", "UPPER_CASE"],
+            "format": [
+              "camelCase",
+              "UPPER_CASE"
+            ],
             "leadingUnderscore": "allow",
             "trailingUnderscore": "allow"
           },
           {
             "selector": "typeLike",
-            "format": ["PascalCase"]
+            "format": [
+              "PascalCase"
+            ]
           },
           {
             "selector": "enumMember",
-            "format": ["PascalCase"]
+            "format": [
+              "PascalCase"
+            ]
           }
         ],
         "complexity": "error",
@@ -66,7 +100,26 @@
         "simple-import-sort/imports": [
           "error",
           {
-            "groups": [["^\\u0000"], ["^@?(?!loaney)\\w"], ["^@loaney?\\w"], ["^\\w"], ["^[^.]"], ["^\\."]]
+            "groups": [
+              [
+                "^\\u0000"
+              ],
+              [
+                "^@?(?!loaney)\\w"
+              ],
+              [
+                "^@loaney?\\w"
+              ],
+              [
+                "^\\w"
+              ],
+              [
+                "^[^.]"
+              ],
+              [
+                "^\\."
+              ]
+            ]
           }
         ],
         "sort-imports": "off",
@@ -78,16 +131,28 @@
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "error",
         "no-invalid-this": "off",
-        "@typescript-eslint/no-invalid-this": ["warn"]
+        "@typescript-eslint/no-invalid-this": [
+          "warn"
+        ]
       }
     },
     {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nx/javascript"
+      ],
       "rules": {}
     },
     {
-      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "files": [
+        "*.spec.ts",
+        "*.spec.tsx",
+        "*.spec.js",
+        "*.spec.jsx"
+      ],
       "env": {
         "jest": true
       },
